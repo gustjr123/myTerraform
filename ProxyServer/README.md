@@ -23,8 +23,11 @@ terraform -install-autocomplete
 terraform init
 terraform plan
 sudo terraform apply -auto-approve
+```
 
-sudo systemctl restart squid
+## 삭제
+```
+sudo terraform destroy -auto-approve
 ```
 
 # 파이어폭스 브라우저 프록시 서버 설정
@@ -33,3 +36,12 @@ sudo systemctl restart squid
 3. 일반 탭 스크롤 최하단 네트워크 설정 <설정> 클릭 
 4. 수동 프록시 설정, http프록시에 프록시서버 IP, PORT = 3128, HTTPS에도 이 프록시 설정 체크, 확인
 5. 브라우저에서 내 아이피 검색 후 프록시서버의 IP로 나오는지 확인
+
+# 참고
+#### 기본적으로 window와 Unix/Linux의 줄 바꿈 문자가 다르기 때문에 파일 자체를 서버에 올려서 사용해야한다.
+
+"local-exec"실행 하면서 EOT 부분에서 에러가 발생하면 보통 이 문제다. 
+
+Window : CR+LF
+
+Unix/Linux : LF

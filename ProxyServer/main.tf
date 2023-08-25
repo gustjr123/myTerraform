@@ -1,12 +1,15 @@
 resource "null_resource" "squid_install" {
   provisioner "local-exec" {
-    command = <<-EOT
-      sudo yum install -y squid 
-      sudo systemctl start squid
-      sudo systemctl enable squid
-      sudo systemctl status squid
+    command = "sudo yum -y install squid"
+  }
 
-      sudo cp /etc/squid/squid.conf /etc/squid/squid.conf.bak
+  provisioner "local-exec" {
+    when    = destroy
+    command = <<-EOT
+    sudo systemctl stop squid
+    sudo systemctl disable squid
+    sudo yum -y remove squid
+    sudo rm -rf /etc/squid/
     EOT
   }
 }
@@ -25,13 +28,13 @@ resource "local_file" "update_squid_conf" {
   })
 
   depends_on = [null_resource.squid_install, local_file.update_allowed_file]
-}
 
-# resource "null_resource" "finish" {
-#   provisioner "local-exec" {
-#     command = <<-EOT
-#       sudo systemctl restart squid
-#     EOT
-#   }
-#   depends_on = [null_resource.squid_install, local_file.update_squid_conf]
-# }
+  provisioner "local-exec" {
+    command = <<-EOT
+    sudo cp /etc/squid/squid.conf /etc/squid/squid.conf.bak
+    sudo systemctl enable --now squid
+    sudo systemctl restart squid
+    sudo systemctl status squid
+    EOT
+  }
+}
