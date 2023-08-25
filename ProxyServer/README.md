@@ -1,5 +1,6 @@
 # 개요
 개인용 프록시 서버 생성을 위한 Terraform 구성
+
 Terraform을 활용해서 squid 설치 및 구성까지 자동화
 
 # 활용법
@@ -17,7 +18,7 @@ terraform version
 terraform -install-autocomplete
 ```
 
-### 파일 다운로드 후 명령어
+## 파일 다운로드 후 명령어
 ``` 
 terraform init
 terraform plan
