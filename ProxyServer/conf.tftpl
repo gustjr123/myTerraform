@@ -25,6 +25,10 @@ acl Safe_ports port 591         # filemaker
 acl Safe_ports port 777         # multiling http
 acl CONNECT method CONNECT
 
+auth_param basic program /usr/lib64/squid/basic_ncsa_auth /etc/squid/htpasswd
+auth_param basic realm proxy
+acl authenticated proxy_auth REQUIRED
+
 #
 # Recommended minimum Access Permission configuration:
 #
@@ -53,6 +57,7 @@ http_access deny manager
 http_access allow localnet
 http_access allow localhost
 http_access allow allowed_ips
+http_access allow authenticated
 
 # And finally deny all other access to this proxy
 http_access deny all

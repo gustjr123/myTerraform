@@ -32,6 +32,7 @@ resource "local_file" "update_squid_conf" {
   provisioner "local-exec" {
     command = <<-EOT
     sudo cp /etc/squid/squid.conf /etc/squid/squid.conf.bak
+    printf "default:$(openssl passwd -crypt default)\n" | sudo tee -a /etc/squid/htpasswd
     sudo systemctl enable --now squid
     sudo systemctl restart squid
     sudo systemctl status squid
