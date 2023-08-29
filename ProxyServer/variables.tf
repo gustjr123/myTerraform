@@ -1,7 +1,7 @@
 variable "myIP" {
   description = "myIP"
   type        = string
-  default     = "<you ip>"
+  default     = "127.0.0.1"
 }
 
 variable "allowed_ips_file" {
