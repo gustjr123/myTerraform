@@ -53,14 +53,14 @@ sudo terraform destroy -auto-approve
 ### 추가로 크롬 브라우저는 기본 시스템 프록시 설정을 사용
 ### 새 프로필을 사용하여 Chrome을 시작하고 Squid 서버에 연결하려면 다음 명령을 사용합니다.
 
-** Linux **
+**Linux**
 ```
 /usr/bin/google-chrome \
     --user-data-dir="$HOME/proxy-profile" \
     --proxy-server="http://SQUID_IP:3128"
 ```
 
-** Window **
+**Window**
 ```
 "C:\Program Files (x86)\Google\Chrome\Application\chrome.exe" ^
     --user-data-dir="%USERPROFILE%\proxy-profile" ^
@@ -84,6 +84,7 @@ Unix/Linux : LF
 
 ## 초기 사용자
 ID : default
+
 PASSWORD : default
 
 ## 사용자 추가
