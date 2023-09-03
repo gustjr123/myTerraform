@@ -58,10 +58,10 @@ output "NIC_id" {
 
 # Attribute Reference
 
-- name                      = nat instance 이름
-- id                        = nat instance ID
-- network_interface_name    = NIC tag 이름
-- network_interface_id      = NIC ID
+- name        = nat instance 이름
+- id          = nat instance ID
+- NIC_name    = NIC tag 이름
+- NIC_id      = NIC ID
 
 - - -
 
