@@ -1,3 +1,8 @@
+locals {
+  allowed_ips_file = "/etc/squid/allowed_ips.txt"
+  target_conf_file = "/etc/squid/squid.conf"
+}
+
 resource "null_resource" "squid_install" {
   provisioner "local-exec" {
     command = "sudo yum -y install squid"
@@ -15,16 +20,16 @@ resource "null_resource" "squid_install" {
 }
 
 resource "local_file" "update_allowed_file" {
-  filename = var.allowed_ips_file
-  content  = var.myIP
+  filename = local.allowed_ips_file
+  content  = var.IP
 
   depends_on = [null_resource.squid_install]
 }
 
 resource "local_file" "update_squid_conf" {
-  filename = var.target_conf_file
+  filename = local.target_conf_file
   content = templatefile("${path.module}/conf.tftpl", {
-    allowed_ip_list = var.allowed_ips_file
+    allowed_ip_list = local.allowed_ips_file
   })
 
   depends_on = [null_resource.squid_install, local_file.update_allowed_file]
@@ -32,7 +37,7 @@ resource "local_file" "update_squid_conf" {
   provisioner "local-exec" {
     command = <<-EOT
     sudo cp /etc/squid/squid.conf /etc/squid/squid.conf.bak
-    printf "default:$(openssl passwd -crypt default)\n" | sudo tee -a /etc/squid/htpasswd
+    printf "${var.user}:$(openssl passwd -crypt ${var.password})\n" | sudo tee -a /etc/squid/htpasswd
     sudo systemctl enable --now squid
     sudo systemctl restart squid
     sudo systemctl status squid
