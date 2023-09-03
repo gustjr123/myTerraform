@@ -34,6 +34,24 @@ sudo terraform apply -auto-approve
 sudo terraform destroy -auto-approve
 ```
 
+# Import
+
+repository의 modules 디렉토리를 통째로 원하는 VM에 넣는다. 
+
+본인의 main.tf파일에서 위 예시를 확인하여 module을 사용한다.
+
+#### Example
+```
+Terraform Dictionary Tree
+├ main.tf (your code)
+├ outputs.tf (your code)
+├ variables.tf (your code)
+└ modules 
+  └ nat-instance
+  └ others
+  └ ...
+```
+
 - - -
 
 # 참고
