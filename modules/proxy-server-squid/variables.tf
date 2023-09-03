@@ -1,17 +1,33 @@
-variable "myIP" {
-  description = "myIP"
+variable "IP" {
+  description = "access IP"
   type        = string
   default     = "127.0.0.1"
+
+  validation {
+    condition     = can(regex("^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$", var.IP))
+    error_message = "Input is not a valid IPv4 address."
+  }
 }
 
-variable "allowed_ips_file" {
-  description = "allowed_ips"
+variable "user" {
+  description = "access Account user"
   type        = string
-  default     = "/etc/squid/allowed_ips.txt"
+  default     = "default"
+
+  validation {
+    condition     = can(regex("^[a-z0-9]+$", var.user))
+    error_message = "Invalid input. Only lowercase letters and numbers are allowed."
+  }
 }
 
-variable "target_conf_file" {
-  description = "squid conf file location"
+variable "password" {
+  description = "access Account password"
   type        = string
-  default     = "/etc/squid/squid.conf"
+  default     = "default"
+
+  validation {
+    condition     = can(regex("^[a-z0-9]+$", var.password))
+    error_message = "Invalid input. Only lowercase letters and numbers are allowed."
+  }
 }
+

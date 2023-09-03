@@ -34,14 +34,3 @@ NAT Gateway의 금액이 매우 많이 들기 때문에 EC2 인스턴스를 NAT 
 
 - - -
 
-## 실행
-
-리소스 생성
-```
-terraform apply -auto-approve -var ssh_key=<ssh key ID>
-```
-
-리소스 삭제
-```
-terraform destroy -auto-approve -var ssh_key=<ssh key ID>
-```
