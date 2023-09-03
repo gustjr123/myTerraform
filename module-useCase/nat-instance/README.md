@@ -7,7 +7,7 @@
 # Example Usage
 
 ### main.tf
-``` 
+``` main.tf
 module "nat_instance" {
   source = "./modules/nat"
 
@@ -21,7 +21,7 @@ module "nat_instance" {
 ```
 
 ### outputs.tf
-``` 
+``` outputs.tf
 output "name" {
   description = "Name of the instance"
   value       = module.nat_instance.name
