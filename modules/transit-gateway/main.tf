@@ -2,16 +2,18 @@ provider "aws" {
   region = "ap-northeast-2"
 }
 
+# Create customer gateway
 resource "aws_customer_gateway" "cgw" {
-  bgp_asn    = 65000
-  ip_address = "106.253.56.124"
-  type       = "ipsec.1"
+  bgp_asn    = var.cgwASN
+  ip_address = var.cgwIP
+  type       = var.cgwType
 
   tags = {
-    Name = "cgw"
+    Name = var.cgwTagName
   }
 }
 
+# Create transit gateway
 resource "aws_ec2_transit_gateway" "tgw" {
   description = "transit gateway"
 
@@ -28,6 +30,24 @@ resource "aws_ec2_transit_gateway" "tgw" {
   }
 }
 
+# Create tgw attachment (to your VPC)
+resource "aws_ec2_transit_gateway_vpc_attachment" "vpc_attach" {
+  transit_gateway_id = aws_ec2_transit_gateway.tgw.id
+
+  dns_support            = "enable"
+  ipv6_support           = "disable"
+  appliance_mode_support = "disable"
+
+  vpc_id     = var.attachVpcId
+  subnet_ids = var.attachVpcSubnetIds
+  tags = {
+    Name = var.vpcAttachTagName
+  }
+
+  depends_on = [aws_ec2_transit_gateway.tgw]
+}
+
+# Create vpn connection
 resource "aws_vpn_connection" "vpn_cnn" {
   customer_gateway_id = aws_customer_gateway.cgw.id
   transit_gateway_id  = aws_ec2_transit_gateway.tgw.id
@@ -35,7 +55,7 @@ resource "aws_vpn_connection" "vpn_cnn" {
   static_routes_only  = true
 
   tags = {
-    Name = "vpn_attach"
+    Name = var.vpnConnTagName
   }
 
   depends_on = [aws_ec2_transit_gateway.tgw, aws_customer_gateway.cgw]
@@ -49,25 +69,10 @@ resource "aws_vpn_connection" "vpn_cnn" {
 #   depends_on = [aws_vpn_connection.vpn_cnn]
 # }
 
-resource "aws_ec2_transit_gateway_vpc_attachment" "vpc_attach" {
-  transit_gateway_id = aws_ec2_transit_gateway.tgw.id
-
-  dns_support            = "enable"
-  ipv6_support           = "disable"
-  appliance_mode_support = "disable"
-
-  vpc_id     = "vpc-0ecd0783983c8993b"
-  subnet_ids = ["subnet-05d8194821321ea23", "subnet-0d1d9fc02e1a1a319", "subnet-09a22874db963b25e", "subnet-0b850ea87cb2a9a1f"]
-  tags = {
-    Name = "tgw_vpc"
-  }
-
-  depends_on = [aws_ec2_transit_gateway.tgw]
-}
-
+# Update routing table
 resource "aws_route" "tgw_route" {
-  route_table_id         = "rtb-028c514eaa7f666ef"
-  destination_cidr_block = "192.168.0.0/21"
+  route_table_id         = var.rtbId
+  destination_cidr_block = var.destinationCIDR
   transit_gateway_id     = aws_ec2_transit_gateway.tgw.id
 
   depends_on = [aws_ec2_transit_gateway_vpc_attachment.vpc_attach, aws_vpn_connection.vpn_cnn]
