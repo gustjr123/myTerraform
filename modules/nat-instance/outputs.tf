@@ -1,11 +1,11 @@
 output "name" {
   description = "Name of the instance"
-  value       = aws_instance.nat_instance.tags.Name
+  value       = aws_instance.nat_instance[0].tags.Name
 }
 
 output "id" {
   description = "ID of the instance"
-  value       = aws_instance.nat_instance.id
+  value       = aws_instance.nat_instance[0].id
 }
 
 output "network_interface_name" {

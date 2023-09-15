@@ -54,6 +54,30 @@ Terraform Dictionary Tree
 
 - - -
 
+# aws 2.X버전 설치
+
+1. 설치
+```
+curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+unzip awscliv2.zip
+sudo ./aws/install --bin-dir /usr/local/bin --install-dir /usr/local/aws-cli --update
+reboot
+```
+
+※ 혹시 모를 상황에 대비하여 설치 후 리부트 해준다.
+
+2. Access Key 설정
+```
+aws configure
+
+# AWS Access Key ID [None]: <AccessKey ID>
+# AWS Secret Access Key [None]: <AccessKey Secret Key>
+# Default region name [None]: ap-northeast-2
+# Default output format [None]: json
+```
+
+- - -
+
 # 참고
 #### 기본적으로 window와 Unix/Linux의 줄 바꿈 문자가 다르기 때문에 파일 자체를 서버에 올려서 사용해야한다.
 
