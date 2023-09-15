@@ -1,5 +1,32 @@
 locals {
-  aws_conf_path = "/etc/ipsec.d/aws.conf"
+  aws_conf_path    = "/etc/ipsec.d/aws.conf"
+  sysctl_conf_path = "/etc/sysctl.conf"
+}
+
+resource "null_resource" "ipsec_install" {
+  provisioner "local-exec" {
+    command = "sudo yum -y install openswan"
+  }
+
+  provisioner "local-exec" {
+    when    = destroy
+    command = <<-EOT
+    sudo systemctl stop ipsec
+    sudo systemctl disable ipsec
+    sudo yum -y remove libreswan
+    EOT
+  }
+}
+
+resource "local_file" "update_sysctl_conf" {
+  filename = local.sysctl_conf_path
+  content  = templatefile("${path.module}/sysctl.tftpl", {})
+
+  provisioner "local-exec" {
+    command = "sudo sysctl -p"
+  }
+
+  depends_on = [null_resource.ipsec_install]
 }
 
 resource "local_file" "update_aws_conf" {
@@ -13,11 +40,7 @@ resource "local_file" "update_aws_conf" {
     RightSubnet2 = var.rightsubnet2
   })
 
-  provisioner "local-exec" {
-    command = <<-EOT
-    
-    EOT
-  }
+  depends_on = [null_resource.ipsec_install]
 }
 
 resource "null_resource" "update_ipsec_secrets" {
@@ -30,16 +53,39 @@ resource "null_resource" "update_ipsec_secrets" {
       EOF
     EOT
   }
+
+  depends_on = [local_file.update_aws_conf, local_file.update_sysctl_conf]
 }
 
 resource "null_resource" "execute_ipsec_commands" {
   # 다음 명령어를 실행하는 local-exec 설정
   provisioner "local-exec" {
     command = <<-EOT
-      iptables -F
-      systemctl restart ipsec
-      systemctl status ipsec
+      sudo iptables -F
+      sudo systemctl restart ipsec
+      sudo systemctl status ipsec
     EOT
   }
-  depends_on = [local_file.update_aws_conf, null_resource.update_ipsec_secrets]
+  depends_on = [null_resource.update_ipsec_secrets]
+}
+
+resource "null_resource" "output_message" {
+  provisioner "local-exec" {
+    command = <<EOT
+    echo "Successful Set up Ipsec"
+    echo "Check your status"
+    echo "sudo systemctl status ipsec"
+    echo "sudo rpm -ql libreswan"
+    EOT
+  }
+
+  provisioner "local-exec" {
+    when    = destroy
+    command = <<-EOT
+    echo "Destroy Ipsec"
+    echo "Check your status"
+    echo "sudo systemctl status ipsec"
+    echo "sudo rpm -ql libreswan"
+    EOT
+  }
 }

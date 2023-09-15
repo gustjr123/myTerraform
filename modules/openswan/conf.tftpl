@@ -7,8 +7,10 @@ conn Tunnel1
     type=tunnel
     ikelifetime=8h
     keylife=1h
-    phase2alg=aes128-sha1;modp1024
-    ike=aes128-sha1;modp1024
+    phase2alg=aes_gcm
+    ike=aes256-sha2_256;dh14
+    #phase2alg=aes128-sha1;modp1024
+    #ike=aes128-sha1;modp1024
     #auth=esp
     keyingtries=%forever
     keyexchange=ike
@@ -17,7 +19,7 @@ conn Tunnel1
     dpddelay=10
     dpdtimeout=30
     dpdaction=restart_by_peer
-    overlapip=yes
+    #overlapip=yes
 
 conn Tunnel2
     authby=secret
@@ -28,8 +30,10 @@ conn Tunnel2
     type=tunnel
     ikelifetime=8h
     keylife=1h
-    phase2alg=aes128-sha1;modp1024
-    ike=aes128-sha1;modp1024
+    phase2alg=aes_gcm
+    ike=aes256-sha2_256;dh14
+    #phase2alg=aes128-sha1;modp1024
+    #ike=aes128-sha1;modp1024
     #auth=esp
     keyingtries=%forever
     keyexchange=ike
@@ -38,4 +42,4 @@ conn Tunnel2
     dpddelay=10
     dpdtimeout=30
     dpdaction=restart_by_peer
-    overlapip=yes
+    #overlapip=yes
