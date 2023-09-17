@@ -88,4 +88,6 @@ resource "null_resource" "output_message" {
     echo "sudo rpm -ql libreswan"
     EOT
   }
+
+  depends_on = [null_resource.execute_ipsec_commands]
 }
