@@ -46,22 +46,24 @@ output "NIC_id" {
 - - -
 
 # Argument Reference
-
-- name           = (Optional) nat instance 이름
-- vpc_id         = (Required) VPC id
-- vpc_cidr_ipv4  = (Required) VPC CIDR
-- subnet_id      = (Required) nat instance가 위치하는 public subnet
-- pvt_subnet_ids = (Required) nat instance로 외부와 연결하려는 private subnet
-- ssh_key        = (Required) nat instance의 ssh key
+|Argument|Description|Option|
+|:--|:--|:--:|
+|name           | nat instance 이름 | Optional
+|vpc_id         | VPC id | Required
+|vpc_cidr_ipv4  | VPC CIDR | Required
+|subnet_id      | nat instance가 위치하는 public subnet | Required
+|pvt_subnet_ids | nat instance로 외부와 연결하려는 private subnet | Required
+|ssh_key        | nat instance의 ssh key | Required
 
 - - -
 
 # Attribute Reference
-
-- name        = nat instance 이름
-- id          = nat instance ID
-- NIC_name    = NIC tag 이름
-- NIC_id      = NIC ID
+|Argument|Description|Value|
+|:--|:--|:--|
+|name        | nat instance 이름 | module.<module 이름>.name
+|id          | nat instance ID | module.<module 이름>.id
+|NIC_name    | NIC tag 이름 | module.<module 이름>.network_interface_name
+|NIC_id      | NIC ID | module.<module 이름>.network_interface_id
 
 - - -
 

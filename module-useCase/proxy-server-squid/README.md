@@ -39,18 +39,20 @@ output "password" {
 - - -
 
 # Argument Reference
-
-- IP = (Optional) 프록시 서버에 접속을 허용할 IP (공인 IP)
-- user = (Optional) 프록시 서버에 접속을 허용할 계정의 user
-- password = (Optional) 서버 접속이 허용된 계정의 password
+|Argument|Description|Option|
+|:--|:--|:--:|
+|IP | 프록시 서버에 접속을 허용할 IP (공인 IP) | Optional
+|user | 프록시 서버에 접속을 허용할 계정의 user | Optional
+|password | 서버 접속이 허용된 계정의 password | Optional
 
 - - -
 
 # Attribute Reference
-
-- IP = 접속을 허용할 IP
-- account = 접속을 허용할 계정
-- password = 계정의 password
+|Argument|Description|Value|
+|:--|:--|:--|
+|IP | 접속을 허용할 IP | module.<module 이름>.IP
+|account | 접속을 허용할 계정 | module.<module 이름>.account
+|password | 계정의 password | module.<module 이름>.password
 
 - - -
 

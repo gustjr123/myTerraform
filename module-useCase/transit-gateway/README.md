@@ -43,7 +43,8 @@ output "tgwTagName" {
 - - -
 
 # Argument Reference
-
+|Argument|Description|Option|
+|:--|:--|:--:|
 - cgwIP = (Required) On-premise측 접속 IP주소 (공인 IP)
 - cgwASN = (Optional) On-premise에서 다루는 vpn 장비의 ASN. 없는 경우 default = 65000
 
@@ -58,17 +59,18 @@ output "tgwTagName" {
 - - -
 
 # Attribute Reference
-
-- cgwID = ID of the customer gateway
-- cgwTagName = Tag name of the customer gateway
-- tgwID = ID of transit gateway
-- tgwTagName = Tag name of transit gateway
-- vpnConnID = ID of vpn connection
-- rtbID = ID of routing table
+|Argument|Description|Value|
+|:--|:--|:--|
+|cgwID | ID of the customer gateway | module.<module 이름>.cgwID
+|cgwTagName | Tag name of the customer gateway | module.<module 이름>.cgwTagName
+|tgwID | ID of transit gateway | module.<module 이름>.tgwID
+|tgwTagName | Tag name of transit gateway | module.<module 이름>.tgwTagName
+|vpnConnID | ID of vpn connection | module.<module 이름>.vpnConnID
+|rtbID | ID of routing table | module.<module 이름>.rtbID
 
 ## 예시
 
-``` terraform
+``` hcl
 output "원하는 이름" {
   description = "설명"
   value       = module.tgw-cgw-conn.<Attribute 값 (tgwID, rtbID 등)>

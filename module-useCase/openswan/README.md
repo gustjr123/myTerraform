@@ -25,15 +25,16 @@ module "myOpenswan" {
 - - -
 
 # Argument Reference
-
-- leftid       = (Required) 온프레미스의 공인 IP 주소
-- right1       = (Required) AWS의 tunnel1 공인 IP 주소
-- right2       = (Required) AWS의 tunnel2 공인 IP 주소
-- leftsubnet   = (Required) 온프레미스의 VPC CIDR
-- rightsubnet1 = (Required) AWS의 VPC CIDR
-- rightsubnet2 = (Required) AWS의 VPC CIDR
-- psk1         = (Required) tunnel1의 Pre-shared key 값
-- psk2         = (Required) tunnel2의 Pre-shared key 값
+|Argument|Description|Option|
+|:--|:--|:--:|
+|leftid       | 온프레미스의 공인 IP 주소 | Required
+|right1       | AWS의 tunnel1 공인 IP 주소 | Required
+|right2       | AWS의 tunnel2 공인 IP 주소 | Required
+|leftsubnet   | 온프레미스의 VPC CIDR | Required
+|rightsubnet1 | AWS의 VPC CIDR | Required
+|rightsubnet2 | AWS의 VPC CIDR | Required
+|psk1         | tunnel1의 Pre-shared key 값 | Required
+|psk2         | tunnel2의 Pre-shared key 값 | Required
 
 - - -
 

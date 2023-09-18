@@ -51,22 +51,25 @@ output "iam_role_arn" {
 - - -
 
 # Argument Reference
+|Argument|Description|Option|
+|:--|:--|:--:|
+|iam_policy_name                |생성할 정책 이름 | Required
+|iam_role_name                  |생성할 역할 이름 | Required
+|custom_policy_json_path        |정책 정의 파일의 경로 (json) | Required
+|role_trust_policy_json_path    |역할의 신뢰관계 정의 파일의 경로 (json) | Required
+|policy_description             |정책 설명 | Optional
+|role_description               |역할 설명 | Optional 
 
-- iam_policy_name               = (Required) 생성할 정책 이름
-- iam_role_name                 = (Required) 생성할 역할 이름
-- custom_policy_json_path       = (Required) 정책 정의 파일의 경로 (json)
-- role_trust_policy_json_path   = (Required) 역할의 신뢰관계 정의 파일의 경로 (json)
-- policy_description            = (Optional) 정책 설명
-- role_description              = (Optional) 역할 설명
 
 - - -
 
 # Attribute Reference
-
-- iam_policy_name   = 정책 이름
-- iam_role_name     = 역할 이름
-- iam_policy_arn    = 정책 arn
-- iam_role_arn      = 역할 arn
+|Argument|Description|Value|
+|:--|:--|:--|
+|iam_policy_name   | 정책 이름 | module.<module 이름>.iam_policy_name
+|iam_role_name     | 역할 이름 | module.<module 이름>.iam_role_name
+|iam_policy_arn    | 정책 arn | module.<module 이름>.iam_policy_arn
+|iam_role_arn      | 역할 arn | module.<module 이름>.iam_role_arn
 
 - - -
 
@@ -77,7 +80,7 @@ repository의 modules 디렉토리를 통째로 원하는 VM에 넣는다.
 본인의 main.tf파일에서 위 예시를 확인하여 module을 사용한다.
 
 #### Example
-```
+``` 
 Terraform Dictionary Tree
 ├ main.tf (your code)
 ├ outputs.tf (your code)
