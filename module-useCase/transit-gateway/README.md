@@ -45,17 +45,15 @@ output "tgwTagName" {
 # Argument Reference
 |Argument|Description|Option|
 |:--|:--|:--:|
-- cgwIP = (Required) On-premise측 접속 IP주소 (공인 IP)
-- cgwASN = (Optional) On-premise에서 다루는 vpn 장비의 ASN. 없는 경우 default = 65000
+| cgwIP | On-premise측 접속 IP주소 (공인 IP) | Required 
+| cgwASN | On-premise에서 다루는 vpn 장비의 ASN. <br> 없는 경우 default = 65000 | Optional
+| attachVpcId | 연결하고자 하는 VPC의 id | Required 
+| attachVpcSubnetIds | 연결하고자 하는 VPC의 Subnet id들 | Required 
+| rtbId | 갱신하려는 VPC의 routing table | Required 
+| destinationCIDR | On-premise측 private network cidr | Required 
 
-- attachVpcId = (Required) 연결하고자 하는 VPC의 id
-- attachVpcSubnetIds = (Required) 연결하고자 하는 VPC의 Subnet id들
-
-  ❗ 하나의 가용영역 당 1개의 서브넷만 연결할 수 있다. 단, 1개의 서브넷이 연결되면 소속된 가용영역의 모든 서브넷들은 vpn 연결이 된다.
-
-- rtbId = (Required) 갱신하려는 VPC의 routing table
-- destinationCIDR = (Required) On-premise측 private network cidr
-
+>❗ 하나의 가용영역 당 1개의 서브넷만 연결할 수 있다.<br>
+단, 1개의 서브넷이 연결되면 소속된 가용영역의 모든 서브넷들은 vpn 연결이 된다.
 - - -
 
 # Attribute Reference
