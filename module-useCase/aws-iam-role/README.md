@@ -7,7 +7,7 @@
 # Example Usage
 
 ### main.tf
-``` terraform
+``` hcl
 module "IAMRole" {
   source = "./modules/aws-iam-role"
 
@@ -25,7 +25,7 @@ module "IAMRole" {
 ```
 
 ### outputs.tf
-``` terraform 
+``` hcl 
 output "iam_policy_name" {
   description = "name of Custom policy"
   value       = module.IAMRole.iam_policy_name
